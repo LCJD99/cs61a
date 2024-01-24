@@ -22,15 +22,17 @@ def roll_dice(num_rolls, dice=six_sided):
     assert num_rolls > 0, 'Must roll at least once.'
     # BEGIN PROBLEM 1
     point = 0
-    tag = True
+    tag = 0
     t = 0
     while t < num_rolls:
         x = dice()
         if x == 1:
-            tag = False
+            tag = tag + 1 
         point = point + x
         t = t + 1
-    if tag == False:
+    if tag >= 3:
+        return 0
+    elif tag >= 1:
         return 1
     else: 
         return point
@@ -76,8 +78,10 @@ def simple_update(num_rolls, player_score, opponent_score, dice=six_sided):
     """Return the total score of a player who starts their turn with
     PLAYER_SCORE and then rolls NUM_ROLLS DICE, ignoring Sus Fuss.
     """
-    score = player_score + take_turn(num_rolls, player_score, opponent_score, dice)
-    return score
+    tmp = take_turn(num_rolls, player_score, opponent_score, dice)
+    if tmp == 0:
+        return 0
+    return player_score + tmp
 
 def is_prime(n):
     """Return whether N is prime."""
